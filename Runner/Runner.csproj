@@ -5,4 +5,105 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="ZKWeb.System.Drawing" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\Capture2Text.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\Capture2Text_CLI.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\imageformats\qtiff.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\msvcp140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\platforms\qwindows.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\pvt.cppan.demo.danbloomberg.leptonica-1.74.4.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\pvt.cppan.demo.jpeg-9.2.0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\pvt.cppan.demo.madler.zlib-1.2.11.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\pvt.cppan.demo.openjpeg.openjp2-2.1.2.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\pvt.cppan.demo.png-1.6.30.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\pvt.cppan.demo.tiff-4.0.8.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\pvt.cppan.demo.webp-0.6.0.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\pvt.cppan.demo.xz_utils.lzma-5.2.3.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\Qt5Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\Qt5Gui.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\Qt5Network.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\Qt5TextToSpeech.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\Qt5Widgets.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\readme.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\deu.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\eng.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\fra.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\jpn.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\kor.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\rus.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\spa.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tesseract400.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\texttospeech\qtexttospeech_sapi.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\vcruntime140.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Invoices\1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Invoices\2.png.exclude">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
