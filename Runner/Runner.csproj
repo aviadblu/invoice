@@ -110,16 +110,16 @@
     <None Update="Invoices\1.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Invoices\2.png.e">
+    <None Update="Invoices\2.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Invoices\2.png.exclude">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Invoices\finance04.png.e">
+    <None Update="Invoices\finance04.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Invoices\invoice-14.jpg.e">
+    <None Update="Invoices\invoice-14.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
