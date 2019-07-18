@@ -6,6 +6,11 @@ using System.IO;
 
 namespace Runner
 {
+    public enum SupportedOCRLanguages
+    {
+        English,
+        Hebrew
+    }
     /// <summary>
     /// Provides .NET access to the Capture2Text .exe (by their license, we can only use the .exe with no modifications allowed)
     /// </summary>
@@ -31,7 +36,7 @@ namespace Runner
         /// </summary>
         public Capture2Text() : this(Capture2TextExecutablePath) { }
 
-        public string GetText(string imagePath)
+        public string GetText(string imagePath, SupportedOCRLanguages lang = SupportedOCRLanguages.English)
         {
             string output = "";
             if (imagePath == null)
@@ -49,7 +54,7 @@ namespace Runner
                 CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Minimized,
                 FileName = executable,
-                Arguments = $"-i {imagePath}"
+                Arguments = $"-l {lang.ToString()} -i {imagePath}"
             };
 
             // starts the exe
@@ -75,7 +80,7 @@ namespace Runner
         /// </summary>
         /// <param name="image">image</param>
         /// <returns>text found in image</returns>        
-        public string GetText(Image image)
+        public string GetText(Image image, SupportedOCRLanguages lang = SupportedOCRLanguages.English)
         {
             using (var bitmap = new Bitmap(image))
             {
@@ -84,7 +89,7 @@ namespace Runner
 
                 try
                 {
-                    return GetText(temporaryFile);
+                    return GetText(temporaryFile, lang);
                 }
                 finally
                 {

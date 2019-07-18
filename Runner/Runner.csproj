@@ -68,25 +68,34 @@
     <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\deu.traineddata">
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\backup\deu.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\backup\eng.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\backup\fra.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\backup\jpn.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\backup\kor.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\backup\rus.traineddata">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\backup\spa.traineddata">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\eng.traineddata">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\fra.traineddata">
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\heb.traineddata">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\jpn.traineddata">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\kor.traineddata">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\rus.traineddata">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\spa.traineddata">
+    <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tessdata\heb.traineddata.1">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Capture2Text\Capture2Text_v4.6.0_64bit\tesseract400.dll">
@@ -99,10 +108,19 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Invoices\1.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Invoices\2.png.e">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Invoices\2.png.exclude">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Invoices\finance04.png.e">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Invoices\invoice-14.jpg.e">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
