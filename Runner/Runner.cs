@@ -17,6 +17,7 @@ namespace Runner
 {
     public enum TextAreaType
     {
+        NONE,
         ID,
         DATE,
         AMOUNT
@@ -27,7 +28,7 @@ namespace Runner
         public Rectangle AreaRect { set; get; }
         public Image RectImage { set; get; }
         public string ExtractedText { set; get; }
-        public TextAreaType TextAreaType { set; get; }
+        public TextAreaType TextAreaType { set; get; } = TextAreaType.NONE;
         public int Id { set; get; }
         public float Amount { set; get; }
         public DateTime Date { set; get; }
