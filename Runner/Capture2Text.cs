@@ -6,11 +6,6 @@ using System.IO;
 
 namespace Runner
 {
-    public enum SupportedOCRLanguages
-    {
-        English,
-        Hebrew
-    }
     /// <summary>
     /// Provides .NET access to the Capture2Text .exe (by their license, we can only use the .exe with no modifications allowed)
     /// </summary>

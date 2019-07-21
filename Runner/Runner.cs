@@ -34,6 +34,7 @@ namespace Runner
         public DateTime Date { set; get; }
         public bool Redundent { set; get; } = true;
     }
+
     class Invoice
     {
         public string Path { set; get; }
@@ -43,13 +44,17 @@ namespace Runner
         public DateTime Date { set; get; }
         public List<string> CNs { set; get; }
         public List<InvoiceTextArea> TextAreaList { set; get; }
+        public Queue<InvoiceTextArea> TextAreasWaitingForOcrQueue { set; get; }
     }
 
     class Runner
     {
+        private int OCRBatchSize = 10;
         private string[] _supportedExt = { "png", "jpg" };
         public List<Invoice> _invoices;
         private Capture2Text _c2t;
+
+        private Queue<InvoiceTextArea> TextAreasWaitingForOcrQueue = new Queue<InvoiceTextArea>();
 
         public Runner()
         {
@@ -108,6 +113,7 @@ namespace Runner
 
         public Task LoadRects(Invoice invoice)
         {
+            Stopwatch stopWatch = Stopwatch.StartNew();
             TaskCompletionSource<bool> tcs = new TaskCompletionSource<bool>();
             string algoExePath = Path.Combine(@"C:\code\invoice\Algo\rectsExtraction.py");
 
@@ -138,34 +144,23 @@ namespace Runner
                         int[][] rectsArr = (from item in jArr select item.Values<int>().ToArray()).ToArray();
 
                         var tasks = new List<Task<bool>>();
-                        int relevantBlocks = 0;
                         Console.WriteLine($"Working on {invoice.Path}");
+                        invoice.TextAreasWaitingForOcrQueue = new Queue<InvoiceTextArea>();
                         for (int i = 0; i < rectsArr.Length; i++)
                         {
                             Console.Write("\rAnalyzing area [{0}/{1}]                              ", i + 1, rectsArr.Length);
                             int[] rect = rectsArr[i];
                             var ta = new InvoiceTextArea() { AreaRect = new Rectangle(rect[0], rect[1], rect[2], rect[3]) };
 
-                            ta = ExtractTextFromRectSync(ta, invoice.Bitmap);
-                            if (!ta.Redundent)
-                            {
-                                invoice.TextAreaList.Add(ta);
-                                relevantBlocks++;
-
-                                if (string.IsNullOrEmpty(invoice.UniqueName))
-                                {
-                                    var hash = new SHA1Managed().ComputeHash(Encoding.UTF8.GetBytes(ta.ExtractedText));
-                                    invoice.UniqueName = string.Concat(hash.Select(b => b.ToString("x2")));
-                                }
-                            }
-                            else
-                            {
-                                invoice.TextAreaList.Add(ta);
-                            }
+                            TextAreasWaitingForOcrQueue.Enqueue(ta);
                         }
+
                         Console.WriteLine("");
-                        Console.WriteLine($"{relevantBlocks} relevant areas found.");
+                        ProcessOcrInvoice(invoice);
                         tcs.SetResult(true);
+
+                        stopWatch.Stop();
+                        Console.WriteLine($"Processing invoice {invoice.Path} took {stopWatch.Elapsed}"); 
 
                     }
                     else if ((string)token.SelectToken("status") == "error")
@@ -190,6 +185,111 @@ namespace Runner
             return tcs.Task;
         }
 
+        public void ProcessOcrInvoice(Invoice invoice)
+        {
+            // Batching
+            while (TextAreasWaitingForOcrQueue.Count > 0)
+            {
+                
+                int size = OCRBatchSize > TextAreasWaitingForOcrQueue.Count ? TextAreasWaitingForOcrQueue.Count : OCRBatchSize;
+                Console.WriteLine($"Working on {size}..");
+                InvoiceTextArea[] taArray = new InvoiceTextArea[size];
+                for (int i = 0; i < size; i++)
+                {
+                    InvoiceTextArea ta;
+                    TextAreasWaitingForOcrQueue.TryDequeue(out ta);
+                    taArray[i] = ta;
+                }
+                taArray = ExtractTextFromRectSyncJS(taArray, invoice.Path);
+
+                foreach (var ta in taArray)
+                {
+                    if (!ta.Redundent)
+                    {
+                        invoice.TextAreaList.Add(ta);
+
+                        if (string.IsNullOrEmpty(invoice.UniqueName))
+                        {
+                            var hash = new SHA1Managed().ComputeHash(Encoding.UTF8.GetBytes(ta.ExtractedText));
+                            invoice.UniqueName = string.Concat(hash.Select(b => b.ToString("x2")));
+                        }
+                    }
+                    else
+                    {
+                        invoice.TextAreaList.Add(ta);
+                    }
+                }
+
+            }
+        }
+
+        public InvoiceTextArea[] ExtractTextFromRectSyncJS(InvoiceTextArea[] textAreasArray, string invoiceImagePath)
+        {
+            try
+            {
+                Rectangle[] rects = new Rectangle[textAreasArray.Length];
+                for (int i = 0; i < textAreasArray.Length; i++)
+                {
+                    rects[i] = textAreasArray[i].AreaRect;
+                }
+                string[] txtArray = Ocr.GetText(invoiceImagePath, rects);
+
+                for (int i = 0; i < txtArray.Length; i++)
+                {
+                    string txt = txtArray[i];
+                    InvoiceTextArea textArea = textAreasArray[i];
+
+
+                    string extractedID = Regex.Match(txt, "\\d{9}").Value;
+                    int id = 0;
+                    if (!string.IsNullOrEmpty(extractedID))
+                        id = int.Parse(extractedID);
+
+                    float amount = 0;
+                    if (id == 0)
+                    {
+                        string extractedAmount = Regex.Match(txt, @"\d{1,3}(,\d{3})*(\.\d\d)?|\.\d\d").Value;
+                        if (!string.IsNullOrEmpty(extractedAmount))
+                            float.TryParse(extractedAmount, out amount);
+                    }
+
+                    Match matchDate = Regex.Match(txt, @"(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2])\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})(?=\W)|\b(?:29(\/|-|\.)0?2\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])?|(?:(?:16|[2468][048]|[3579][26])00)?)))(?=\W)|\b(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9])|(?:1[0-2]))(\4)?(?:(?:1[6-9]|[2-9]\d)?\d{2})?(?=\b)");
+
+                    if (matchDate.Success)
+                    {
+                        DateTime date;
+                        DateTime.TryParse(matchDate.Groups[0].Value, out date);
+                        textArea.Date = date;
+                        textArea.Redundent = false;
+                        textArea.TextAreaType = TextAreaType.DATE;
+                    }
+
+                    if (id > 0)
+                    {
+                        textArea.Id = id;
+                        textArea.Redundent = false;
+                        textArea.TextAreaType = TextAreaType.ID;
+                    }
+
+                    if (amount > 0)
+                    {
+                        textArea.Amount = amount;
+                        textArea.Redundent = false;
+                        textArea.TextAreaType = TextAreaType.AMOUNT;
+                    }
+
+                    textArea.ExtractedText = txt;
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            return textAreasArray;
+        }
+
         public InvoiceTextArea ExtractTextFromRectSync(InvoiceTextArea textArea, Image invoiceImage)
         {
             try
@@ -200,6 +300,8 @@ namespace Runner
                     {
                         gr.DrawImage(invoiceImage, new Rectangle(0, 0, bmp.Width, bmp.Height), textArea.AreaRect, GraphicsUnit.Pixel);
                     }
+
+
                     string txt = _c2t.GetText(bmp, SupportedOCRLanguages.English);
                     string extractedID = Regex.Match(txt, "\\d{9}").Value;
                     int id = 0;
